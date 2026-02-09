@@ -1,0 +1,36 @@
+{
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "dev mode configure preset",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "displayName": "dev mode build preset",
+      "configurePreset": "debug",
+      "jobs": 8
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "debug",
+      "displayName": "dev mode test preset",
+      "configurePreset": "debug"
+    }
+  ],
+  "packagePresets": [
+    {
+      "name": "debug",
+      "displayName": "dev mode package preset",
+      "configurePreset": "debug"
+    }
+  ]
+}

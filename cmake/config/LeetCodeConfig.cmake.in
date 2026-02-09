@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+file(GLOB TARGETS_FILES "${CMAKE_CURRENT_LIST_DIR}/*_targets.cmake")
+foreach(target_file ${TARGETS_FILES})
+  include("${target_file}")
+endforeach()
+check_required_components(LeetCode)
