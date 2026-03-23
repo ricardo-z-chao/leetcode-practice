@@ -30,14 +30,14 @@ function(format_cmakefiles)
     file(
       GLOB root_files FOLLOW_SYMLINKS
       LIST_DIRECTORIES false
-      CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}
       RELATIVE ${CMAKE_SOURCE_DIR}
       "CMakeLists.txt" "*.cmake")
     file(
       GLOB_RECURSE files
       LIST_DIRECTORIES false
       RELATIVE ${CMAKE_SOURCE_DIR}
-      "${CMAKE_SOURCE_DIR}/*.cmake" "${CMAKE_SOURCE_DIR}/*.cmake.in")
+      "${CMAKE_SOURCE_DIR}/cmake/*.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/*.cmake.in")
     list(APPEND files ${root_files})
     add_custom_target(
       format-cmake-list ALL
