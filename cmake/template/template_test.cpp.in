@@ -1,0 +1,27 @@
+extern "C" {
+#include "leetcode/template.h"
+}
+
+#include "gtest/gtest.h"
+
+struct TestParam {
+  /* code */
+};
+
+class TempalteTest : public ::testing::TestWithParam<TestParam> {
+  void SetUp() override {}
+
+  void TearDown() override {}
+};
+
+TEST_P(TemplateTest, Default) {
+  TestParam param = GetParam();
+  /* code */
+}
+
+INSTANTIATE_TEST_SUITE_P(TemplateDataSet,
+                         TemplateTest,
+                         ::testing::Values(TestParam{ /* code */ }),
+                         [](const ::testing::TestParamInfo<TemplateTest::ParamType>& info) {
+                           return "Case" + std::to_string(info.index + 1);
+                         });
