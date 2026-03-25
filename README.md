@@ -88,3 +88,23 @@ option(ENABLE_FORMAT OFF)
 > }
 > ```
 
+## 代码模版快速生成
+
+若要快速创建一个题目，例如 LeetCode 第一题 TwoSum，可以在命令行中执行 CMake 脚本：
+
+```shell
+cmake -DTEMPLATE=two_sum -P cmake/template_generator.cmake
+```
+
+这将在指定的位置中生成文件：
+
+```
+├── test/
+│   └── two_sum_test.cpp      # 测试文件
+└── src/
+    ├── two_sum.c             # 源文件
+    └── include/
+        └── leetcode/
+            └── two_sum.h     # 头文件
+```
+
