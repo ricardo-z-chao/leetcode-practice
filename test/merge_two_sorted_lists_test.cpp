@@ -8,55 +8,62 @@ extern "C" {
 
 static struct ListNode* createListFromArray(std::vector<int> arr) {
   if (arr.empty()) return NULL;
-
-  struct ListNode* head = (struct ListNode*)malloc(sizeof(struct ListNode));
-  head->val = arr[0];
-  head->next = NULL;
-
-  struct ListNode* current = head;
-  for (size_t i = 1; i < arr.size(); i++) {
+  struct ListNode* dummy = (struct ListNode*)calloc(1, sizeof(struct ListNode));
+  struct ListNode* tail = dummy;
+  for (const auto& value : arr) {
     struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    newNode->val = arr[i];
+    newNode->val = value;
     newNode->next = NULL;
-    current->next = newNode;
-    current = current->next;
+    tail->next = newNode;
+    tail = tail->next;
   }
+  return dummy->next;
+}
 
-  return head;
+static void freeList(struct ListNode* list) {
+  while (list != NULL) {
+    struct ListNode* releasedNode = list;
+    list = list->next;
+    free(releasedNode);
+  }
 }
 
 static std::vector<int> listToVector(struct ListNode* list) {
   std::vector<int> result;
-  while (list != NULL) {
+  while (list != nullptr) {
     result.push_back(list->val);
     list = list->next;
   }
   return result;
 }
 
-static void freeList(struct ListNode* list) {
-  while (list != NULL) {
-    struct ListNode* temp = list;
-    list = list->next;
-    free(temp);
+struct TestParam {
+  std::vector<int> l1;
+  std::vector<int> l2;
+  std::vector<int> expected;
+};
+
+class MergeTwoSortedListsTest : public ::testing::TestWithParam<TestParam> {
+ protected:
+  struct ListNode* result;
+
+  void TearDown() override {
+    freeList(result);
   }
+};
+
+
+TEST_P(MergeTwoSortedListsTest, Default) {
+  TestParam param = GetParam();
+  struct ListNode* list1 = createListFromArray(param.l1);
+  struct ListNode* list2 = createListFromArray(param.l2);
+  result = mergeTwoLists(list1, list2);
+  EXPECT_EQ(listToVector(result), param.expected);
 }
 
-TEST(MergeTwoSortedListsTest, Case1) {
-  std::vector<int> l1 = {1, 2, 4};
-  std::vector<int> l2 = {1, 3, 4};
-  std::vector<int> expected = {1, 1, 2, 3, 4, 4};
-
-  struct ListNode* list1 = createListFromArray(l1);
-  struct ListNode* list2 = createListFromArray(l2);
-
-  struct ListNode* result = mergeTwoLists(list1, list2);
-  std::vector<int> actual = listToVector(result);
-
-  EXPECT_EQ(actual.size(), expected.size());
-  for (size_t i = 0; i < expected.size(); i++) {
-    EXPECT_EQ(actual[i], expected[i]);
-  }
-
-  freeList(result);
-}
+INSTANTIATE_TEST_SUITE_P(MergeTwoSortedListsDataSet,
+                         MergeTwoSortedListsTest,
+                         ::testing::Values(TestParam{{1, 2, 4}, {1, 3, 4}, {1, 1, 2, 3, 4, 4}}),
+                         [](const ::testing::TestParamInfo<MergeTwoSortedListsTest::ParamType>& info) {
+                           return "Case" + std::to_string(info.index + 1);
+                         });

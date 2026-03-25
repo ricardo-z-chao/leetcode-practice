@@ -2,75 +2,67 @@ extern "C" {
 #include "leetcode/partition_list.h"
 }
 
-#include <cstddef>
 #include <vector>
 
 #include "gtest/gtest.h"
 
 static struct ListNode* createListFromArray(std::vector<int> arr) {
   if (arr.empty()) return NULL;
-
-  struct ListNode* head = (struct ListNode*)malloc(sizeof(struct ListNode));
-  head->val = arr[0];
-  head->next = NULL;
-
-  struct ListNode* current = head;
-  for (size_t i = 1; i < arr.size(); i++) {
+  struct ListNode* dummy = (struct ListNode*)calloc(1, sizeof(struct ListNode));
+  struct ListNode* tail = dummy;
+  for (const auto& value : arr) {
     struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    newNode->val = arr[i];
+    newNode->val = value;
     newNode->next = NULL;
-    current->next = newNode;
-    current = current->next;
+    tail->next = newNode;
+    tail = tail->next;
   }
-
-  return head;
+  return dummy->next;
 }
 
 static void freeList(struct ListNode* list) {
   while (list != NULL) {
-    struct ListNode* temp = list;
+    struct ListNode* releasedNode = list;
     list = list->next;
-    free(temp);
+    free(releasedNode);
   }
 }
 
-static void expectListEqualsArray(struct ListNode* list, std::vector<int> expected) {
-  struct ListNode* current = list;
-  for (size_t i = 0; i < expected.size(); i++) {
-    ASSERT_NE(current, nullptr);
-    EXPECT_EQ(current->val, expected[i]);
-    current = current->next;
+static std::vector<int> listToVector(struct ListNode* list) {
+  std::vector<int> result;
+  while (list != nullptr) {
+    result.push_back(list->val);
+    list = list->next;
   }
-  ASSERT_EQ(current, nullptr);
+  return result;
 }
 
-class PartitionListTest : public ::testing::Test {
- protected:
-  void TearDown() override {}
+struct TestParam {
+  std::vector<int> input;
+  int x;
+  std::vector<int> expected;
 };
 
-TEST_F(PartitionListTest, Case1) {
-  std::vector<int> input = {1, 4, 3, 2, 5, 2};
-  std::vector<int> expected = {1, 2, 2, 4, 3, 5};
-  int x = 3;
+class PartitionListTest : public ::testing::TestWithParam<TestParam> {
+ protected:
+  struct ListNode* result;
 
-  struct ListNode* head = createListFromArray(input);
-  struct ListNode* result = partition(head, x);
+  void TearDown() override {
+    freeList(result);
+  }
+};
 
-  expectListEqualsArray(result, expected);
-
-  freeList(result);
+TEST_P(PartitionListTest, Default) {
+  TestParam param = GetParam();
+  struct ListNode* inputList = createListFromArray(param.input);
+  result = partition(inputList, param.x);
+  EXPECT_EQ(listToVector(result), param.expected);
 }
 
-TEST_F(PartitionListTest, Case2) {
-  std::vector<int> input = {2, 1};
-  std::vector<int> expected = {1, 2};
-  int x = 2;
-
-  struct ListNode* head = createListFromArray(input);
-  struct ListNode* result = partition(head, x);
-
-  expectListEqualsArray(result, expected);
-
-  freeList(result);
-}
+INSTANTIATE_TEST_SUITE_P(PartitionListTestDataSet,
+                         PartitionListTest,
+                         ::testing::Values(TestParam{{1, 4, 3, 2, 5, 2}, 3, {1, 2, 2, 4, 3, 5}},
+                                           TestParam{{2, 1}, 2, {1, 2}}),
+                         [](const ::testing::TestParamInfo<PartitionListTest::ParamType>& info) {
+                           return "Case" + std::to_string(info.index + 1);
+                         });
