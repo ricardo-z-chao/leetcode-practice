@@ -15,8 +15,7 @@ static struct ListNode* createListFromArray(std::vector<int> arr) {
 
   struct ListNode* current = head;
   for (size_t i = 1; i < arr.size(); i++) {
-    struct ListNode* newNode =
-        (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
     newNode->val = arr[i];
     newNode->next = NULL;
     current->next = newNode;

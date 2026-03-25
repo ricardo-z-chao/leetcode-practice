@@ -21,7 +21,7 @@
  * 定义链表的节点
  */
 typedef struct MyLinkedList {
-  int val;                   /**< 节点存储的整数值 */
+  int val; /**< 节点存储的整数值 */
   struct MyLinkedList* next; /**< 指向下一个节点的指针 */
 } MyLinkedList;
 
@@ -32,7 +32,9 @@ typedef struct MyLinkedList {
  *
  * @return 返回新创建的链表头指针，失败返回 NULL
  */
-MyLinkedList* myLinkedListCreate() { return calloc(1, sizeof(MyLinkedList)); }
+MyLinkedList* myLinkedListCreate() {
+  return calloc(1, sizeof(MyLinkedList));
+}
 
 /**
  * @brief 获取链表中下标为 index 的节点的值。如果下标无效，则返回 -1
