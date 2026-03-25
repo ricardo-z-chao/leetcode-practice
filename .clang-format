@@ -1,4 +1,42 @@
----
-Language:        Cpp
-BasedOnStyle:  Google
-...
+BasedOnStyle: Google
+
+# Switch from tabs to spaces (2 spaces per level)
+IndentWidth:        2
+TabWidth:           2
+UseTab:             Never
+
+# Ensure pointer stars stay next to the type, as in rsyslog’s declarations
+PointerAlignment:   Left
+
+# Keep case labels indented under switch
+IndentCaseLabels:   true
+
+# Continuation lines (e.g. broken calls) also align with 2 spaces
+ContinuationIndentWidth: 2
+
+# Pack function parameters onto one line when they fit
+#BinPackParameters:  true
+BinPackParameters:        false
+BinPackArguments:         true
+AlignAfterOpenBracket:    Align
+
+# Don’t realign or sort existing trailing comments or includes
+AlignTrailingComments: false
+SortIncludes:          false
+
+# Prevent short functions or blocks being reformatted into a single line
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortBlocksOnASingleLine:    false
+
+# Turn off automatic re-wrapping so long comment lines aren’t split
+ColumnLimit: 120
+
+# Special handling for some generative macros
+MacroBlockBegin: "^BEGIN"
+MacroBlockEnd: "^END"
+
+
+MaxEmptyLinesToKeep: 2
+# tells clang-format to indent the whole line – # and all – to the current code indent
+IndentPPDirectives: BeforeHash
+AlignEscapedNewlines: Left
