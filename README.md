@@ -11,27 +11,29 @@
 
 ```
 leetcode-practice/
-├── CMakeLists.txt           # CMake 构建配置
-├── CMakePresets.json        # CMake 预设配置
-├── CPPLINT.cfg              # cpplint 静态检查配置
-├── .clang-format            # clang-format 格式化配置
-├── .editorconfig            # 编辑器配置
-├── cmake/                   # CMake 脚本目录
-│   ├── build.cmake          # 构建相关配置
-│   ├── deps.cmake           # 第三方依赖管理
-│   ├── format.cmake         # 代码格式化脚本
-│   ├── lint.cmake         	 # 静态检查脚本
-│   ├── runtime_check.cmake  # 运行时检查脚本
-│   ├── export_install.cmake # 安装导出配置
-│   ├── config/              # 配置文件
-│   └── modules/             # CMake 模块
-├── src/                     # 源代码目录
-│   └── include/             # 头文件目录
-├── test/                    # 单元测试目录
-└── out/                     # 构建输出目录
-    ├── build/               # CMake 构建中间文件
-    ├── install/             # 安装输出
-    └── dist/                # 分发包
+├── CMakeLists.txt                # CMake 构建配置
+├── CMakePresets.json             # CMake 预设配置
+├── CPPLINT.cfg                   # cpplint 静态检查配置
+├── .clang-format                 # clang-format 格式化配置
+├── .editorconfig                 # 编辑器配置
+├── cmake/                        # CMake 脚本目录
+│   ├── build.cmake               # 构建相关配置
+│   ├── deps.cmake                # 第三方依赖管理
+│   ├── format.cmake              # 代码格式化脚本
+│   ├── lint.cmake         	      # 静态检查脚本
+│   ├── runtime_check.cmake       # 运行时检查脚本
+│   ├── export_install.cmake      # 安装导出配置
+│   ├── template_generator.cmake  # 模版生成器
+│   ├── template/                 # 代码模版
+│   ├── config/                   # 配置文件
+│   └── modules/                  # CMake 模块
+├── src/                          # 源代码目录
+│   └── include/                  # 头文件目录
+├── test/                         # 单元测试目录
+└── out/                          # 构建输出目录
+    ├── build/                    # CMake 构建中间文件
+    ├── install/                  # 安装输出
+    └── dist/                     # 分发包
 ```
 
 ## 格式化支持（可选）
