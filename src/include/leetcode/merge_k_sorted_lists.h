@@ -1,8 +1,5 @@
 #pragma once
 
-struct ListNode {
-  int val;
-  struct ListNode* next;
-};
+#include "leetcode/common/list.h"
 
 struct ListNode* mergeKLists(struct ListNode**, int);

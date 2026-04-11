@@ -2,9 +2,6 @@
 
 #include <stdbool.h>
 
-struct ListNode {
-  int val;
-  struct ListNode* next;
-};
+#include "leetcode/common/list.h"
 
 bool isPalindrome(struct ListNode*);

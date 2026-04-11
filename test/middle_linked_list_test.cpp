@@ -4,29 +4,12 @@ extern "C" {
 
 #include <vector>
 
+#define INCLUDE_UTILS
+#ifdef INCLUDE_UTILS
+  #include "utils/linked_list_utils.h"
+#endif
+
 #include "gtest/gtest.h"
-
-static struct ListNode* createListFromArray(std::vector<int> arr) {
-  if (arr.empty()) return NULL;
-  struct ListNode* dummy = (struct ListNode*)calloc(1, sizeof(struct ListNode));
-  struct ListNode* tail = dummy;
-  for (const auto& value : arr) {
-    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    newNode->val = value;
-    newNode->next = NULL;
-    tail->next = newNode;
-    tail = tail->next;
-  }
-  return dummy->next;
-}
-
-static void freeList(struct ListNode* list) {
-  while (list != NULL) {
-    struct ListNode* releasedNode = list;
-    list = list->next;
-    free(releasedNode);
-  }
-}
 
 struct TestParam {
   std::vector<int> head;
