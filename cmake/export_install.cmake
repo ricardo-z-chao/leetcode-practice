@@ -37,3 +37,7 @@ function(create_package_configuration_and_version)
                 "${CMAKE_BINARY_DIR}/LeetCodeConfigVersion.cmake"
           DESTINATION ${CMAKE_INSTALL_LIBDIR}/leetcode/cmake)
 endfunction()
+
+# 安装公共头文件
+install(FILES "${CMAKE_SOURCE_DIR}/src/include/leetcode/common/list.h"
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/leetcode/common)

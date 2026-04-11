@@ -25,6 +25,10 @@ foreach(file ${files})
   target_include_directories(
     ${FILE_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/include>"
                         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+  set_target_properties(
+    ${FILE_NAME}
+    PROPERTIES PUBLIC_HEADER
+               "${CMAKE_SOURCE_DIR}/src/include/leetcode/${FILE_NAME}.h")
 
   export_and_install_targets(${FILE_NAME})
 
