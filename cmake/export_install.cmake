@@ -40,4 +40,5 @@ endfunction()
 
 # 安装公共头文件
 install(FILES "${CMAKE_SOURCE_DIR}/src/include/leetcode/common/list.h"
+              "${CMAKE_SOURCE_DIR}/src/include/leetcode/common/tree.h"
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/leetcode/common)
