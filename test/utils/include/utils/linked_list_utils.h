@@ -2,10 +2,7 @@
 
 #include <vector>
 
-struct ListNode {
-  int val;
-  struct ListNode* next;
-};
+#include "leetcode/common/list.h"
 
 struct ListNode* createListFromArray(std::vector<int>);
 

@@ -1,5 +1,7 @@
 #include "utils/linked_list_utils.h"
 
+#include <vector>
+
 struct ListNode* createListFromArray(std::vector<int> arr) {
   if (arr.empty()) return NULL;
   struct ListNode* dummy = (struct ListNode*)calloc(1, sizeof(struct ListNode));
