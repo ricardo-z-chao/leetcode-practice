@@ -31,7 +31,7 @@ TEST_P(MaximumDepthOfBinaryTreeTest, Default) {
 
 INSTANTIATE_TEST_SUITE_P(MaximumDepthOfBinaryTreeDataSet,
                          MaximumDepthOfBinaryTreeTest,
-                         ::testing::Values(TestParam{{3, 9, 20, -1, -1, 15, 7}, 3}),
+                         ::testing::Values(TestParam{{3, 9, 20, NULL, NULL, 15, 7}, 3}),
                          [](const ::testing::TestParamInfo<MaximumDepthOfBinaryTreeTest::ParamType>& info) {
                            return "Case" + std::to_string(info.index + 1);
                          });
