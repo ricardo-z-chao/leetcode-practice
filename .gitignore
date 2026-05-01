@@ -1,11 +1,18 @@
 CMakeUserPresets.json
-.DS_Store
 TODOs.md
-
-# out
 out/
 target/
-
-# IDE
-.vscode
 .claude
+
+### IntelliJ IDEA ###
+.idea
+!.idea/icon.png
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode
+
+### Mac OS ###
+.DS_Store
