@@ -6,6 +6,7 @@
 static int* bubbleSort(int*, int, int*);
 static int* quickSort(int*, int, int*);
 static int* quickSortHelper(int*, int, int);
+static int* selectionSort(int*, int, int*);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -17,7 +18,8 @@ static int* quickSortHelper(int*, int, int);
  */
 int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return bubbleSort(nums, numsSize, returnSize);
-  return quickSort(nums, numsSize, returnSize);
+  // return quickSort(nums, numsSize, returnSize);
+  return selectionSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -94,5 +96,31 @@ static int* quickSortHelper(int* nums, int left, int right) {
   /* 递归处理左右两边的子数组 */
   quickSortHelper(nums, left, mark - 1);
   quickSortHelper(nums, mark + 1, right);
+  return nums;
+}
+
+/**
+ * @brief 选择排序
+ * @note 不稳定排序，时间复杂度 O(n^2)
+ * @param[in] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+static int* selectionSort(int* nums, int numsSize, int* returnSize) {
+  for (int i = 0; i < numsSize - 1; i++) {
+    int minimumIndex = i;
+    for (int j = i + 1; j < numsSize; j++) {
+      if (nums[j] < nums[minimumIndex]) {
+        minimumIndex = j;
+      }
+    }
+    if (minimumIndex != i) {
+      nums[minimumIndex] ^= nums[i];
+      nums[i] ^= nums[minimumIndex];
+      nums[minimumIndex] ^= nums[i];
+    }
+  }
+  *returnSize = numsSize;
   return nums;
 }
