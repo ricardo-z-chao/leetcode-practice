@@ -10,6 +10,8 @@ static int* selectionSort(int*, int, int*);
 static int* insertionSort(int*, int, int*);
 static int* heapSort(int*, int, int*);
 static void siftDown(int*, int, int);
+static int* mergeSort(int*, int, int*);
+static void mergeSortHelper(int*, int, int);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -24,7 +26,8 @@ int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return quickSort(nums, numsSize, returnSize);
   // return selectionSort(nums, numsSize, returnSize);
   // return insertionSort(nums, numsSize, returnSize);
-  return heapSort(nums, numsSize, returnSize);
+  // return heapSort(nums, numsSize, returnSize);
+  return mergeSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -194,4 +197,51 @@ static void siftDown(int* nums, int size, int start) {
     nums[parent] ^= nums[child];
     parent = child;
   }
+}
+
+/**
+ * @brief 归并排序
+ * @note 稳定排序，平均时间复杂度 O(nlogn)
+ * @param[in] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+static int* mergeSort(int* nums, int numsSize, int* returnSize) {
+  mergeSortHelper(nums, 0, numsSize - 1);
+  *returnSize = numsSize;
+  return nums;
+}
+
+/**
+ * @brief 归并排序辅助函数
+ * @param[in] nums 输入数组
+ * @param[in] left 当前递归的左边界
+ * @param[in] right 当前递归的右边界
+ */
+static void mergeSortHelper(int* nums, int left, int right) {
+  if (left >= right) return;
+  /* 划分阶段 */
+  int mid = (left + right) / 2;
+  mergeSortHelper(nums, left, mid);
+  mergeSortHelper(nums, mid + 1, right);
+  /* 合并阶段 */
+  int len = right - left + 1;
+  int* temp = (int*)malloc(len * sizeof(int));
+  int p = left, q = mid + 1, i = 0;
+  while (i < len && p <= mid && q <= right) {
+    temp[i++] = nums[p] < nums[q] ? nums[p++] : nums[q++];
+  }
+  /* 剩余的元素加入数组中 */
+  while (p <= mid) {
+    temp[i++] = nums[p++];
+  }
+  while (q <= right) {
+    temp[i++] = nums[q++];
+  }
+  /* 将排序后的元素复制回原数组 */
+  for (i = 0; i < len; i++) {
+    nums[left + i] = temp[i];
+  }
+  free(temp);
 }
