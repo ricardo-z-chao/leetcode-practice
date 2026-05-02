@@ -8,6 +8,8 @@ static int* quickSort(int*, int, int*);
 static int* quickSortHelper(int*, int, int);
 static int* selectionSort(int*, int, int*);
 static int* insertionSort(int*, int, int*);
+static int* heapSort(int*, int, int*);
+static void siftDown(int*, int, int);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -21,7 +23,8 @@ int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return bubbleSort(nums, numsSize, returnSize);
   // return quickSort(nums, numsSize, returnSize);
   // return selectionSort(nums, numsSize, returnSize);
-  return insertionSort(nums, numsSize, returnSize);
+  // return insertionSort(nums, numsSize, returnSize);
+  return heapSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -146,4 +149,49 @@ static int* insertionSort(int* nums, int numsSize, int* returnSize) {
   }
   *returnSize = numsSize;
   return nums;
+}
+
+/**
+ * @brief 堆排序
+ * @note 不稳定排序，平均时间复杂度 O(nlogn)，最坏时间复杂度 O(nlogn)
+ * @param[in] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+static int* heapSort(int* nums, int numsSize, int* returnSize) {
+  /* 构建最大堆，查找最后一个非叶子节点的索引 */
+  for (int i = numsSize / 2 - 1; i >= 0; i--) {
+    siftDown(nums, numsSize, i);
+  }
+  for (int end = numsSize - 1; end > 0; end--) {
+    /* 交换首尾元素 */
+    nums[0] ^= nums[end];
+    nums[end] ^= nums[0];
+    nums[0] ^= nums[end];
+    /* 重新调整堆 */
+    siftDown(nums, end, 0);
+  }
+  *returnSize = numsSize;
+  return nums;
+}
+
+/**
+ * @brief 自顶向下堆化
+ * @param[in] nums 输入数组
+ * @param[in] size 数组大小
+ * @param[in] start 堆化的起始位置
+ */
+static void siftDown(int* nums, int size, int start) {
+  int parent = start;
+  while (parent < size) {
+    int child = parent * 2 + 1;
+    if (child >= size) break;
+    if (child + 1 < size && nums[child] < nums[child + 1]) child++;
+    if (nums[parent] > nums[child]) break;
+    nums[parent] ^= nums[child];
+    nums[child] ^= nums[parent];
+    nums[parent] ^= nums[child];
+    parent = child;
+  }
 }
