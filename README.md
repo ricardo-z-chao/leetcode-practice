@@ -20,7 +20,7 @@ leetcode-practice/
 │   ├── build.cmake               # 构建相关配置
 │   ├── deps.cmake                # 第三方依赖管理
 │   ├── format.cmake              # 代码格式化脚本
-│   ├── lint.cmake         	      # 静态检查脚本
+│   ├── lint.cmake                # 静态检查脚本
 │   ├── runtime_check.cmake       # 运行时检查脚本
 │   ├── export_install.cmake      # 安装导出配置
 │   ├── template_generator.cmake  # 模版生成器
@@ -30,6 +30,7 @@ leetcode-practice/
 ├── src/                          # 源代码目录
 │   └── include/                  # 头文件目录
 ├── test/                         # 单元测试目录
+│   └── utils/                    # 测试类的工具函数
 └── out/                          # 构建输出目录
     ├── build/                    # CMake 构建中间文件
     ├── install/                  # 安装输出
@@ -109,4 +110,3 @@ cmake -DTEMPLATE=two_sum -P cmake/template_generator.cmake
         └── leetcode/
             └── two_sum.h     # 头文件
 ```
-
