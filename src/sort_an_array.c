@@ -7,6 +7,7 @@ static int* bubbleSort(int*, int, int*);
 static int* quickSort(int*, int, int*);
 static int* quickSortHelper(int*, int, int);
 static int* selectionSort(int*, int, int*);
+static int* insertionSort(int*, int, int*);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -19,7 +20,8 @@ static int* selectionSort(int*, int, int*);
 int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return bubbleSort(nums, numsSize, returnSize);
   // return quickSort(nums, numsSize, returnSize);
-  return selectionSort(nums, numsSize, returnSize);
+  // return selectionSort(nums, numsSize, returnSize);
+  return insertionSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -120,6 +122,27 @@ static int* selectionSort(int* nums, int numsSize, int* returnSize) {
       nums[i] ^= nums[minimumIndex];
       nums[minimumIndex] ^= nums[i];
     }
+  }
+  *returnSize = numsSize;
+  return nums;
+}
+
+/**
+ * @brief 插入排序
+ * @note 稳定排序，时间复杂度 O(n^2)
+ * @param[in] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+static int* insertionSort(int* nums, int numsSize, int* returnSize) {
+  for (int i = 1; i < numsSize; i++) {
+    int cur = nums[i], j = i - 1;
+    while (j >= 0 && nums[j] > cur) {
+      nums[j + 1] = nums[j];
+      j--;
+    }
+    nums[j + 1] = cur;
   }
   *returnSize = numsSize;
   return nums;
