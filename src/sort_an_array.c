@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 static int* bubbleSort(int*, int, int*);
 static int* quickSort(int*, int, int*);
@@ -12,6 +13,7 @@ static int* heapSort(int*, int, int*);
 static void siftDown(int*, int, int);
 static int* mergeSort(int*, int, int*);
 static void mergeSortHelper(int*, int, int);
+static int* countingSort(int*, int, int*);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -27,7 +29,8 @@ int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return selectionSort(nums, numsSize, returnSize);
   // return insertionSort(nums, numsSize, returnSize);
   // return heapSort(nums, numsSize, returnSize);
-  return mergeSort(nums, numsSize, returnSize);
+  // return mergeSort(nums, numsSize, returnSize);
+  return countingSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -244,4 +247,45 @@ static void mergeSortHelper(int* nums, int left, int right) {
     nums[left + i] = temp[i];
   }
   free(temp);
+}
+
+/**
+ * @brief 计数排序
+ * @note 稳定排序，时间复杂度 O(n+m)，其中 m 是输入数据的范围。
+ *       1. 当数列最大值和最小值差距过大时，并不适合用计数排序
+ *       2. 计数排序只适合对整数进行排序
+ * @param[in] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+static int* countingSort(int* nums, int numsSize, int* returnSize) {
+  /* 获取数列最大值和最小值 */
+  int max = nums[0], min = nums[0];
+  for (int i = 1; i < numsSize; i++) {
+    if (nums[i] > max) max = nums[i];
+    if (nums[i] < min) min = nums[i];
+  }
+  /* 创建统计数组 */
+  int len = max - min + 1;
+  int* counter = (int*)calloc(len, sizeof(int));
+  /* 统计每个元素出现的次数 */
+  for (int i = 0; i < numsSize; i++) {
+    /* 这里需要减去最小值作为偏移量 */
+    counter[nums[i] - min]++;
+  }
+  /* 计算前缀和 */
+  for (int i = 1; i < len; i++) {
+    counter[i] += counter[i - 1];
+  }
+  /* 从后往前遍历原数组 */
+  int* sorted = (int*)malloc(numsSize * sizeof(int));
+  for (int i = numsSize - 1; i >= 0; i--) {
+    sorted[counter[nums[i] - min]-- - 1] = nums[i];
+  }
+  memcpy(nums, sorted, numsSize * sizeof(int));
+  free(counter);
+  free(sorted);
+  *returnSize = numsSize;
+  return nums;
 }
