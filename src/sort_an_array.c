@@ -14,6 +14,8 @@ static void siftDown(int*, int, int);
 static int* mergeSort(int*, int, int*);
 static void mergeSortHelper(int*, int, int);
 static int* countingSort(int*, int, int*);
+static int* bucketSort(int*, int, int*);
+static int compareInt(const void*, const void*);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -30,7 +32,8 @@ int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return insertionSort(nums, numsSize, returnSize);
   // return heapSort(nums, numsSize, returnSize);
   // return mergeSort(nums, numsSize, returnSize);
-  return countingSort(nums, numsSize, returnSize);
+  // return countingSort(nums, numsSize, returnSize);
+  return bucketSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -288,4 +291,73 @@ static int* countingSort(int* nums, int numsSize, int* returnSize) {
   free(sorted);
   *returnSize = numsSize;
   return nums;
+}
+
+/**
+ * @brief 桶排序
+ * @note 稳定排序，平均时间复杂度 O(n+m)，其中 m 是桶的数量。当输入数据分布较为均匀时，桶排序的效率较高。
+ *       如何确定桶的数量和范围，通常没有唯一的数学公式，而是根据数据分布和性能目标来权衡。
+ * @param[in] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+int* bucketSort(int* nums, int numsSize, int* returnSize) {
+  /* 计算最大值和最小值 */
+  int max = nums[0], min = nums[0];
+  for (int i = 1; i < numsSize; i++) {
+    if (nums[i] > max) max = nums[i];
+    if (nums[i] < min) min = nums[i];
+  }
+  int bucketScope = 5; /* 桶的宽度，这里假设为5，在实际使用时需要根据数据的分布来决定 */
+  int bucketNum = (max - min + 1) / bucketScope + 1; /* 桶的数量，加 1 表示保证至少要有一个桶 */
+  int initialCapacity = numsSize / bucketNum + 1; /* 初始桶的大小，可以根据实际情况调整 */
+  int** buckets = (int**)malloc(bucketNum * sizeof(int*)); /* 创建桶 */
+  int* bucketSizes = (int*)calloc(bucketNum, sizeof(int)); /* 记录每个桶的大小 */
+  int* bucketCapacities = (int*)malloc(bucketNum * sizeof(int)); /* 记录每个桶的容量 */
+  /* 为每个桶的容量设置足够的大小 */
+  for (int i = 0; i < bucketNum; i++) {
+    buckets[i] = (int*)malloc(initialCapacity * sizeof(int));
+    bucketCapacities[i] = initialCapacity;
+  }
+  /* 将元素分配的桶中 */
+  for (int i = 0; i < numsSize; i++) {
+    int bucketIndex = (nums[i] - min) / bucketScope;
+    /* 处理边界问题 */
+    if (bucketIndex >= bucketNum) bucketIndex = bucketNum - 1;
+    /* 扩容 */
+    if (bucketSizes[bucketIndex] >= bucketCapacities[bucketIndex]) {
+      buckets[bucketIndex] = (int*)realloc(buckets[bucketIndex], bucketCapacities[bucketIndex] * 2 * sizeof(int));
+      bucketCapacities[bucketIndex] *= 2;
+    }
+    buckets[bucketIndex][bucketSizes[bucketIndex]++] = nums[i];
+  }
+  /* 对每个桶进行排序，这里可以使用内置快速排序对桶进行排序 */
+  for (int i = 0; i < bucketNum; i++) {
+    if (bucketSizes[i] > 0) {
+      qsort(buckets[i], bucketSizes[i], sizeof(int), compareInt);
+    }
+  }
+  /* 合并桶 */
+  *returnSize = 0;
+  for (int i = 0; i < bucketNum; i++) {
+    for (int j = 0; j < bucketSizes[i]; j++) {
+      nums[(*returnSize)++] = buckets[i][j];
+    }
+    free(buckets[i]);
+  }
+  free(buckets);
+  free(bucketSizes);
+  free(bucketCapacities);
+  return nums;
+}
+
+/**
+ * @brief 比较函数，用于 qsort 进行排序
+ * @param[in] a 第一个元素的指针
+ * @param[in] b 第二个元素的指针
+ * @return a 和 b 的差值，正数表示 a 大于 b，负数表示 a 小于 b，零表示 a 和 b 相等
+ */
+int compareInt(const void* a, const void* b) {
+  return (*(int*)a - *(int*)b);
 }
