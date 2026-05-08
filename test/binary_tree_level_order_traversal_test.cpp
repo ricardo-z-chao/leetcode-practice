@@ -27,7 +27,7 @@ class BinaryTreeLevelOrderTraversalTest : public ::testing::TestWithParam<TestPa
 TEST_P(BinaryTreeLevelOrderTraversalTest, LevelOrderTraversal) {
   TestParam param = GetParam();
 
-  struct TreeNode* root = createTreeFromArray(param.input);
+  struct TreeNode* root = BinaryTreeUtils::createTreeFromArray(param.input);
   ASSERT_NE(root, nullptr);
 
   int returnSize = 0;
@@ -49,7 +49,7 @@ TEST_P(BinaryTreeLevelOrderTraversalTest, LevelOrderTraversal) {
   }
   free(result);
   free(returnColumnSizes);
-  freeTree(root);
+  BinaryTreeUtils::freeTree(root);
 }
 
 std::vector<TestParam> GetTestCases() {

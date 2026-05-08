@@ -22,15 +22,15 @@ class RemoveNthFromEndTest : public ::testing::TestWithParam<TestParam> {
   struct ListNode* result;
 
   void TearDown() override {
-    freeList(result);
+    LinkedListUtils::freeList(result);
   }
 };
 
 TEST_P(RemoveNthFromEndTest, Default) {
   TestParam param = GetParam();
-  struct ListNode* head = createListFromArray(param.head);
+  struct ListNode* head = LinkedListUtils::createListFromArray(param.head);
   result = removeNthFromEnd(head, param.n);
-  EXPECT_EQ(listToVector(result), param.expected);
+  EXPECT_EQ(LinkedListUtils::listToVector(result), param.expected);
 }
 
 INSTANTIATE_TEST_SUITE_P(RemoveNthFromEndDataSet,

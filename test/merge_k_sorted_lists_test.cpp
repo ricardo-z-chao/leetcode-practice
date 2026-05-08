@@ -21,7 +21,7 @@ class MergeKSortedListsTest : public ::testing::TestWithParam<TestParam> {
   struct ListNode* result;
 
   void TearDown() override {
-    freeList(result);
+    LinkedListUtils::freeList(result);
   }
 };
 
@@ -30,10 +30,10 @@ TEST_P(MergeKSortedListsTest, Default) {
   int k = param.lists.size();
   struct ListNode** lists = (struct ListNode**)malloc(k * sizeof(struct ListNode*));
   for (int i = 0; i < k; i++) {
-    lists[i] = createListFromArray(param.lists[i]);
+    lists[i] = LinkedListUtils::createListFromArray(param.lists[i]);
   }
   result = mergeKLists(lists, k);
-  EXPECT_EQ(listToVector(result), param.expected);
+  EXPECT_EQ(LinkedListUtils::listToVector(result), param.expected);
 }
 
 INSTANTIATE_TEST_SUITE_P(MergeKSortedListsDataSet,

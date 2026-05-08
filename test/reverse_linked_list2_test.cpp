@@ -23,15 +23,15 @@ class ReverseLinkedList2Test : public ::testing::TestWithParam<TestParam> {
   struct ListNode* result;
 
   void TearDown() override {
-    freeList(result);
+    LinkedListUtils::freeList(result);
   }
 };
 
 TEST_P(ReverseLinkedList2Test, Default) {
   TestParam param = GetParam();
-  struct ListNode* head = createListFromArray(param.values);
+  struct ListNode* head = LinkedListUtils::createListFromArray(param.values);
   result = reverseBetween(head, param.left, param.right);
-  EXPECT_EQ(listToVector(result), param.expected);
+  EXPECT_EQ(LinkedListUtils::listToVector(result), param.expected);
 }
 
 INSTANTIATE_TEST_SUITE_P(ReverseLinkedList2DataSet,

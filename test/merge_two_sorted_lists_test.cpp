@@ -22,17 +22,17 @@ class MergeTwoSortedListsTest : public ::testing::TestWithParam<TestParam> {
   struct ListNode* result;
 
   void TearDown() override {
-    freeList(result);
+    LinkedListUtils::freeList(result);
   }
 };
 
 
 TEST_P(MergeTwoSortedListsTest, Default) {
   TestParam param = GetParam();
-  struct ListNode* list1 = createListFromArray(param.l1);
-  struct ListNode* list2 = createListFromArray(param.l2);
+  struct ListNode* list1 = LinkedListUtils::createListFromArray(param.l1);
+  struct ListNode* list2 = LinkedListUtils::createListFromArray(param.l2);
   result = mergeTwoLists(list1, list2);
-  EXPECT_EQ(listToVector(result), param.expected);
+  EXPECT_EQ(LinkedListUtils::listToVector(result), param.expected);
 }
 
 INSTANTIATE_TEST_SUITE_P(MergeTwoSortedListsDataSet,

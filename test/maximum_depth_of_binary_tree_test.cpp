@@ -23,10 +23,10 @@ class MaximumDepthOfBinaryTreeTest : public ::testing::TestWithParam<TestParam> 
 
 TEST_P(MaximumDepthOfBinaryTreeTest, Default) {
   TestParam param = GetParam();
-  struct TreeNode* root = createTreeFromArray(param.input);
+  struct TreeNode* root = BinaryTreeUtils::createTreeFromArray(param.input);
   int result = maxDepth(root);
   EXPECT_EQ(result, param.expected);
-  freeTree(root);
+  BinaryTreeUtils::freeTree(root);
 }
 
 INSTANTIATE_TEST_SUITE_P(MaximumDepthOfBinaryTreeDataSet,

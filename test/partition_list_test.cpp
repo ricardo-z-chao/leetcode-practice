@@ -22,15 +22,15 @@ class PartitionListTest : public ::testing::TestWithParam<TestParam> {
   struct ListNode* result;
 
   void TearDown() override {
-    freeList(result);
+    LinkedListUtils::freeList(result);
   }
 };
 
 TEST_P(PartitionListTest, Default) {
   TestParam param = GetParam();
-  struct ListNode* inputList = createListFromArray(param.input);
+  struct ListNode* inputList = LinkedListUtils::createListFromArray(param.input);
   result = partition(inputList, param.x);
-  EXPECT_EQ(listToVector(result), param.expected);
+  EXPECT_EQ(LinkedListUtils::listToVector(result), param.expected);
 }
 
 INSTANTIATE_TEST_SUITE_P(PartitionListTestDataSet,

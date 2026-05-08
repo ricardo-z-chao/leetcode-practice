@@ -21,13 +21,13 @@ class PalindromeLinkedListTest : public ::testing::TestWithParam<TestParam> {
   struct ListNode* list;
 
   void TearDown() override {
-    freeList(list);
+    LinkedListUtils::freeList(list);
   }
 };
 
 TEST_P(PalindromeLinkedListTest, Default) {
   TestParam param = GetParam();
-  list = createListFromArray(param.head);
+  list = LinkedListUtils::createListFromArray(param.head);
   bool result = isPalindrome(list);
   EXPECT_EQ(result, param.expected);
 }

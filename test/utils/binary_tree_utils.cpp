@@ -2,22 +2,21 @@
 
 #include <vector>
 
+namespace BinaryTreeUtils {
+
 struct TreeNode* createTreeFromArray(const std::vector<int>& arr) {
   if (arr.empty() || arr[0] == NULL) return NULL;
   struct TreeNode* root = (struct TreeNode*)malloc(sizeof(struct TreeNode));
   root->val = arr[0];
   root->left = NULL;
   root->right = NULL;
-
   std::vector<struct TreeNode*> nodes;
   nodes.push_back(root);
-
   size_t i = 0;
   while (i < nodes.size()) {
     struct TreeNode* current = nodes[i];
     size_t leftIdx = 2 * i + 1;
     size_t rightIdx = 2 * i + 2;
-
     if (leftIdx < arr.size() && arr[leftIdx] != NULL) {
       struct TreeNode* leftNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
       leftNode->val = arr[leftIdx];
@@ -26,7 +25,6 @@ struct TreeNode* createTreeFromArray(const std::vector<int>& arr) {
       current->left = leftNode;
       nodes.push_back(leftNode);
     }
-
     if (rightIdx < arr.size() && arr[rightIdx] != NULL) {
       struct TreeNode* rightNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
       rightNode->val = arr[rightIdx];
@@ -35,10 +33,8 @@ struct TreeNode* createTreeFromArray(const std::vector<int>& arr) {
       current->right = rightNode;
       nodes.push_back(rightNode);
     }
-
     i++;
   }
-
   return root;
 }
 
@@ -56,3 +52,5 @@ std::vector<int> treeToVector(int* arr, int size) {
   }
   return result;
 }
+
+}  // namespace BinaryTreeUtils

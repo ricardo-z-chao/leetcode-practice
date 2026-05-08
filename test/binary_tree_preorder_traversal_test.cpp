@@ -28,10 +28,10 @@ class BinaryTreePreorderTraversalTest : public ::testing::TestWithParam<TestPara
 
 TEST_P(BinaryTreePreorderTraversalTest, Default) {
   TestParam param = GetParam();
-  struct TreeNode* root = createTreeFromArray(param.input);
+  struct TreeNode* root = BinaryTreeUtils::createTreeFromArray(param.input);
   result = preorderTraversal(root, &returnSize);
-  EXPECT_EQ(treeToVector(result, returnSize), param.expected);
-  freeTree(root);
+  EXPECT_EQ(BinaryTreeUtils::treeToVector(result, returnSize), param.expected);
+  BinaryTreeUtils::freeTree(root);
 }
 
 INSTANTIATE_TEST_SUITE_P(BinaryTreePreorderTraversalDataSet,

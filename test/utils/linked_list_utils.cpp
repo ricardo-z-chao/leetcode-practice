@@ -2,6 +2,8 @@
 
 #include <vector>
 
+namespace LinkedListUtils {
+
 struct ListNode* createListFromArray(std::vector<int> arr) {
   if (arr.empty()) return NULL;
   struct ListNode* dummy = (struct ListNode*)calloc(1, sizeof(struct ListNode));
@@ -32,3 +34,5 @@ std::vector<int> listToVector(struct ListNode* list) {
   }
   return result;
 }
+
+}  // namespace LinkedListUtils

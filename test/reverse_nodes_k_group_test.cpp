@@ -23,7 +23,7 @@ class ReverseNodesKGroupTest : public ::testing::TestWithParam<TestParam> {
 
   void SetUp() override {
     TestParam param = GetParam();
-    head = createListFromArray(param.values);
+    head = LinkedListUtils::createListFromArray(param.values);
   }
 
   void TearDown() override {}
@@ -32,9 +32,9 @@ class ReverseNodesKGroupTest : public ::testing::TestWithParam<TestParam> {
 TEST_P(ReverseNodesKGroupTest, Default) {
   TestParam param = GetParam();
   struct ListNode* result = reverseKGroup(head, param.k);
-  std::vector<int> resultVec = listToVector(result);
+  std::vector<int> resultVec = LinkedListUtils::listToVector(result);
   EXPECT_EQ(resultVec, param.expected);
-  freeList(result);
+  LinkedListUtils::freeList(result);
 }
 
 INSTANTIATE_TEST_SUITE_P(ReverseNodesKGroupDataSet,

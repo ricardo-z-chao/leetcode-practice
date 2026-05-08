@@ -123,7 +123,7 @@ class IntersectionTwoLinkedListsTest : public ::testing::TestWithParam<TestParam
 
   void TearDown() override {
     // Only free from headA since headB shares the same nodes
-    freeList(headA);
+    LinkedListUtils::freeList(headA);
   }
 };
 

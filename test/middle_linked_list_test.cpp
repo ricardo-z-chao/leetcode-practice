@@ -21,13 +21,13 @@ class MiddleLinkedListTest : public ::testing::TestWithParam<TestParam> {
   struct ListNode* list;
 
   void TearDown() override {
-    freeList(list);
+    LinkedListUtils::freeList(list);
   }
 };
 
 TEST_P(MiddleLinkedListTest, Default) {
   TestParam param = GetParam();
-  list = createListFromArray(param.head);
+  list = LinkedListUtils::createListFromArray(param.head);
   struct ListNode* result = middleNode(list);
   EXPECT_EQ(result->val, param.expected);
 }

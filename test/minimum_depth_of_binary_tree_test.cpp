@@ -23,10 +23,10 @@ class MinimumDepthOfBinaryTreeTest : public ::testing::TestWithParam<TestParam> 
 
 TEST_P(MinimumDepthOfBinaryTreeTest, Cases) {
   TestParam param = GetParam();
-  struct TreeNode* root = createTreeFromArray(param.input);
+  struct TreeNode* root = BinaryTreeUtils::createTreeFromArray(param.input);
   int result = minDepth(root);
   EXPECT_EQ(result, param.expected);
-  freeTree(root);
+  BinaryTreeUtils::freeTree(root);
 }
 
 INSTANTIATE_TEST_SUITE_P(MinimumDepthOfBinaryTreeDataSet,

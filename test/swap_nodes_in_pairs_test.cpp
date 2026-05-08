@@ -22,7 +22,7 @@ class SwapNodesInPairsTest : public ::testing::TestWithParam<TestParam> {
 
   void SetUp() override {
     TestParam param = GetParam();
-    head = createListFromArray(param.values);
+    head = LinkedListUtils::createListFromArray(param.values);
   }
 
   void TearDown() override {}
@@ -31,9 +31,9 @@ class SwapNodesInPairsTest : public ::testing::TestWithParam<TestParam> {
 TEST_P(SwapNodesInPairsTest, Default) {
   TestParam param = GetParam();
   struct ListNode* result = swapPairs(head);
-  std::vector<int> resultVec = listToVector(result);
+  std::vector<int> resultVec = LinkedListUtils::listToVector(result);
   EXPECT_EQ(resultVec, param.expected);
-  freeList(result);
+  LinkedListUtils::freeList(result);
 }
 
 INSTANTIATE_TEST_SUITE_P(SwapNodesInPairsDataSet,

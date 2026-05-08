@@ -23,7 +23,7 @@ class LinkedListCycle2Test : public ::testing::TestWithParam<TestParam> {
 
   void SetUp() override {
     TestParam param = GetParam();
-    head = createListFromArray(param.values);
+    head = LinkedListUtils::createListFromArray(param.values);
 
     if (param.pos != -1) {
       // Create cycle: node at pos points back to itself (or to head to form cycle)
@@ -45,7 +45,7 @@ class LinkedListCycle2Test : public ::testing::TestWithParam<TestParam> {
     // For test cleanup, we rely on process exit to reclaim memory
     TestParam param = GetParam();
     if (param.pos == -1) {
-      freeList(head);
+      LinkedListUtils::freeList(head);
     }
     // When there's a cycle, don't free - would cause infinite traversal
   }
