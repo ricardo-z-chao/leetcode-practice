@@ -11,8 +11,10 @@ file(
 # test模块的工具函数
 if(BUILD_TESTING)
   add_library(
-    test_utils STATIC ${CMAKE_SOURCE_DIR}/test/utils/linked_list_utils.cpp
-                      ${CMAKE_SOURCE_DIR}/test/utils/binary_tree_utils.cpp)
+    test_utils STATIC
+    ${CMAKE_SOURCE_DIR}/test/utils/linked_list_utils.cpp
+    ${CMAKE_SOURCE_DIR}/test/utils/binary_tree_utils.cpp
+    ${CMAKE_SOURCE_DIR}/test/utils/multi_tree_utils.cpp)
   target_include_directories(
     test_utils PUBLIC ${CMAKE_SOURCE_DIR}/test/utils/include
                       ${CMAKE_SOURCE_DIR}/src/include)
