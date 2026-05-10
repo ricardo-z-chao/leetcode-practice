@@ -16,6 +16,7 @@ static void mergeSortHelper(int*, int, int);
 static int* countingSort(int*, int, int*);
 static int* bucketSort(int*, int, int*);
 static int compareInt(const void*, const void*);
+static int* radixSort(int*, int, int*);
 
 /**
  * @berief leetcode 912. 排序数组
@@ -33,7 +34,8 @@ int* sortArray(int* nums, int numsSize, int* returnSize) {
   // return heapSort(nums, numsSize, returnSize);
   // return mergeSort(nums, numsSize, returnSize);
   // return countingSort(nums, numsSize, returnSize);
-  return bucketSort(nums, numsSize, returnSize);
+  // return bucketSort(nums, numsSize, returnSize);
+  return radixSort(nums, numsSize, returnSize);
 }
 
 /**
@@ -360,4 +362,47 @@ static int* bucketSort(int* nums, int numsSize, int* returnSize) {
  */
 int compareInt(const void* a, const void* b) {
   return (*(int*)a - *(int*)b);
+}
+
+/**
+ * @brief 基数排序
+ * @note 稳定排序，时间复杂度 O(d*n)，其中 d 是数字的位数，n 是元素个数。
+ *       基数排序适用于数值范围较大的情况，但前提是数据必须可以表示为固定位数的格式，
+ *       且位数不能过大。例如，浮点数不适合使用基数排序，因为其位数过大。
+ * @param[in, out] nums 输入数组
+ * @param[in] numsSize 输入数组大小
+ * @param[out] returnSize 输出数组大小
+ * @return 排序后的数组
+ */
+static int* radixSort(int* nums, int numsSize, int* returnSize) {
+  const int kSize = numsSize;
+  /* 获取最大值用于判断位数 */
+  int max = nums[0];
+  for (int i = 1; i < numsSize; i++) {
+    if (nums[i] > max) max = nums[i];
+  }
+  /* 从个位开始排序 */
+  for (int k = 1; k <= max; k *= 10) {
+    int counter[10] = {0}; /* 统计每个位数的数量 */
+    int sorted[kSize]; /* 存储排序结果的临时数组 */
+    /* 统计nums中当前位出现的次数 */
+    for (int j = 0; j < numsSize; j++) {
+      int digit = (nums[j] / k) % 10;
+      counter[digit]++;
+    }
+    for (int j = 1; j < 10; j++) {
+      counter[j] += counter[j - 1];
+    }
+    /* 从后往前遍历原数组 */
+    for (int j = numsSize - 1; j >= 0; j--) {
+      int digit = (nums[j] / k) % 10;
+      sorted[--counter[digit]] = nums[j];
+    }
+    /* 将排序结果复制回原数组 */
+    for (int j = 0; j < numsSize; j++) {
+      nums[j] = sorted[j];
+    }
+  }
+  *returnSize = numsSize;
+  return nums;
 }
