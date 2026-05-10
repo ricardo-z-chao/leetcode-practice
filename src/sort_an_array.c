@@ -302,7 +302,7 @@ static int* countingSort(int* nums, int numsSize, int* returnSize) {
  * @param[out] returnSize 输出数组大小
  * @return 排序后的数组
  */
-int* bucketSort(int* nums, int numsSize, int* returnSize) {
+static int* bucketSort(int* nums, int numsSize, int* returnSize) {
   /* 计算最大值和最小值 */
   int max = nums[0], min = nums[0];
   for (int i = 1; i < numsSize; i++) {
