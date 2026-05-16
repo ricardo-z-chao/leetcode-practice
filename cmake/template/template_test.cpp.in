@@ -9,13 +9,15 @@ struct TestParam {
 };
 
 class TempalteTest : public ::testing::TestWithParam<TestParam> {
+  protected:
+    TestParam param = GetParam();
+
   void SetUp() override {}
 
   void TearDown() override {}
 };
 
 TEST_P(TemplateTest, Default) {
-  TestParam param = GetParam();
   /* code */
 }
 
